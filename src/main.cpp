@@ -9,6 +9,8 @@
 #include "inputhandler.h"
 #include "parser.h"
 #include "focusedText.h"
+#include "texturemanager.h"
+#include "texturebag.h"
 
 struct SDL_Application {
 	AppContext appContext;
@@ -16,6 +18,7 @@ struct SDL_Application {
 	InputHandler inputHandler;
 	Parser parser;
 	FocusedText ft;
+	TextureManager textureManager;
 
 	std::stringstream mobySS;
 	std::stringstream aliceSS;
@@ -47,19 +50,34 @@ struct SDL_Application {
 		//			word = getWordFromString(string)	->stringstream will return a word until it is empty, and then returns a literal
 		//			printWordToWindow(word)		->this function will control the speed at which the words get printed
 
+		loadTextures();
 		rContext.initializeTTFText();
+		rContext.initializeWindow(appContext);
 	}
 
 	~SDL_Application() {
 		SDL_Quit();
 	}
 
+	void loadTextures() {
+		appContext.textureBag.upArrow.loadTexture(rContext.getRenderer(), "assets/arrow1.bmp");
+		appContext.textureBag.upArrowHovered.loadTexture(rContext.getRenderer(), "assets/arrow2.bmp");
+		appContext.textureBag.downArrow.loadTextureRotated(rContext.getRenderer(), "assets/arrow1.bmp", 180.0f);
+		appContext.textureBag.downArrowHovered.loadTextureRotated(rContext.getRenderer(), "assets/arrow2.bmp", 180.0f);
+	}
+
 	void Input() {
 		inputHandler.pollEvents(appContext);
+		//	TO-DO: Handle the speed at which words appear
+		inputHandler.wordTimer(appContext);
+		inputHandler.handleMouseInput(appContext, rContext.getRenderer());
 	}
 
 	void Update() {
-		appContext.focusedWord = ft.returnWord();
+		if (appContext.displayNewWord) {
+			appContext.focusedWord = ft.returnWord();
+			appContext.displayNewWord = false;
+		}
 	}
 
 	void Render() {

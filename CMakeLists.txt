@@ -4,7 +4,7 @@ project(reading_speed)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_library(reading_speed_src include/fonts.h src/fonts.cpp "include/guiwidgets.h"  "src/rendercontext.cpp" "include/rendercontext.h" "include/appcontext.h" "include/inputhandler.h" "src/inputhandler.cpp" "include/parser.h" "src/parser.cpp" "include/focusedText.h" "src/focusedText.cpp")
+add_library(reading_speed_src include/fonts.h src/fonts.cpp "include/guiwidgets.h"  "src/rendercontext.cpp" "include/rendercontext.h" "include/appcontext.h" "include/inputhandler.h" "src/inputhandler.cpp" "include/parser.h" "src/parser.cpp" "include/focusedText.h" "src/focusedText.cpp" "include/texturemanager.h" "src/texturemanager.cpp" "include/texturebag.h" "include/constants.h")
 
 target_include_directories(reading_speed_src PUBLIC ${PROJECT_SOURCE_DIR}/include)
 

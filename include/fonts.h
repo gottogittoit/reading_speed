@@ -10,7 +10,7 @@ namespace Fonts {
 		static TTF_Font* focusedWordFont = [] {
 			TTF_Font* tempFont;
 			try {
-				tempFont = TTF_OpenFont("assets/Roboto-VariableFont_wdth,wght.ttf", 18.0f);
+				tempFont = TTF_OpenFont("assets/Roboto-VariableFont_wdth,wght.ttf", 20.0f);
 				if (!tempFont) {
 					throw "Couldn't open focusedWordFont\n";
 				}
