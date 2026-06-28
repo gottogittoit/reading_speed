@@ -13,13 +13,24 @@ void InputHandler::pollEvents(AppContext& context) {
 			SDL_Log("App quit!");
 			break;
 		case SDL_EVENT_MOUSE_BUTTON_DOWN:
-			for (auto& button : context.wdgts.buttonArray) {
+			for (auto& button : context.gui.buttonArray) {
 				if (button.hovered) {
-					modifyWordTimer(context, button.increaseSpeed);
-					std::cout << "Word timer modified: " << button.increaseSpeed;
+					switch (button.id) {
+					case ARROW:
+						modifyWordTimer(context, button.increaseSpeed);
+						std::cout << "Word timer modified\n";
+						break;
+					case PAUSE:
+						break;
+					case PLAY:
+						break;
+					case REWIND:
+						break;
+					case FFW:
+						break;
+					}
 				}
 			}
-			break;
 		}
 	}
 }
@@ -39,14 +50,28 @@ void InputHandler::wordTimer(AppContext& context) {
 void InputHandler::modifyWordTimer(AppContext& context, bool increase) {
 	if (increase && context.WPM < context.maxWPM) {
 		context.WPM += 10.0;
+		//	TODO: Modify word speed string
 		std::chrono::duration<double> d = std::chrono::duration<double>{ 60.0 / (context.WPM) };
 		context.mutableSpeed = std::chrono::duration_cast<std::chrono::milliseconds>(d);
 	}
 	else if (!increase && context.WPM > context.minWPM){
 		context.WPM -= 10.0;
+		//	TODO: Modify word speed string
 		std::chrono::duration<double> d = std::chrono::duration<double>{ 60.0 / (context.WPM) };
 		context.mutableSpeed = std::chrono::duration_cast<std::chrono::milliseconds>(d);
 	}
+}
+
+void InputHandler::pauseWords(AppContext& context) {
+	context.displayNewWord = false;
+}
+
+void InputHandler::playWords(AppContext& context) {
+	context.displayNewWord = true;
+}
+
+void InputHandler::goToNextWord(AppContext& context) {
+
 }
 
 void transformMouseInput(AppContext& context, SDL_Renderer* renderer, SDL_FPoint& point) {
@@ -62,13 +87,15 @@ void transformMouseInput(AppContext& context, SDL_Renderer* renderer, SDL_FPoint
 
     point.x = tx;
     point.y = ty;
+	
+	std::cout << "MouseX: " << tx << " MouseY: " << ty << '\n';
 }
 
 void InputHandler::handleMouseInput(AppContext& context, SDL_Renderer* renderer) {
     SDL_FPoint transformed;
     transformMouseInput(context, renderer, transformed);
 
-    for (auto& button : context.wdgts.buttonArray) {
+    for (auto& button : context.gui.buttonArray) {
         if (SDL_PointInRectFloat(&transformed, &button.rect)) {
             button.hovered = true;
         }

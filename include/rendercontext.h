@@ -19,13 +19,15 @@ public:
 
 	void renderWord(AppContext& context);
 	void initializeWindow(AppContext& context);
+	void renderWPM(AppContext& context);
 	void renderFrame(AppContext& context);
 private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 
 	TTF_TextEngine* textEngine = nullptr;
-	TTF_Text* text = nullptr;
+	TTF_Text* word_TTFText = nullptr;
+	TTF_Text* WPM_TTFText = nullptr;
 };
 
 #endif

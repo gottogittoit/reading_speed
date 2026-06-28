@@ -2,15 +2,31 @@
 #define GUI_WIDGETS_H
 
 #include <SDL3\SDL.h>
+#include <vector>
+
+//	It is a general name in case I add more buttons, but for now only corresponds to the increase and decrease speed arrows
+enum ButtonID {
+	ARROW,
+	PAUSE,
+	PLAY,
+	REWIND,
+	FFW
+};
 
 struct Button {
 	SDL_FRect rect;
 	bool hovered;
 	bool increaseSpeed;
+	ButtonID id;
 };
 
-struct GUIWidgets {
-	GUIWidgets() {}
+//	Each GUI element should be a block! For future features
+struct GUIBlock {
+	SDL_FRect box;
+};
+
+struct GUI {
+	GUI() {}
 
 	SDL_FRect textInfo = {
 		.x = 60,
@@ -26,35 +42,7 @@ struct GUIWidgets {
 		.h = 50
 	};
 
-	SDL_FRect textContent = {
-		.x = 90,
-		.y = 90,
-		.w = 150,
-		.h = 60
-	};
-
-
-	Button upArrow = {
-		.rect = {
-		.x = 245,
-		.y = 95,
-		.w = 32,
-		.h = 16},
-		.hovered = false,
-		.increaseSpeed = true
-	};
-
-	Button downArrow = {
-		.rect = {
-		.x = 245,
-		.y = 116,
-		.w = 32,
-		.h = 16},
-		.hovered = false,
-		.increaseSpeed = false
-	};
-
-	SDL_FRect contentSettings = {
+	/*SDL_FRect contentSettings = {
 		.x = 60,
 		.y = 160,
 		.w = 75,
@@ -66,11 +54,57 @@ struct GUIWidgets {
 		.y = 160,
 		.w = 75,
 		.h = 50
+	};*/
+
+	Button upArrow = {
+		.rect = {
+		.x = 245,
+		.y = 95,
+		.w = 24,
+		.h = 12},
+		.hovered = false,
+		.increaseSpeed = true,
+		.id = ARROW
 	};
 
-	static const int numWdgts = 5;
-	SDL_FRect wdgtArray[numWdgts] = { textInfo, readingInfo, textContent, contentSettings, guiSettings };
+	Button downArrow = {
+		.rect = {
+		.x = 245,
+		.y = 116,
+		.w = 24,
+		.h = 12},
+		.hovered = false,
+		.increaseSpeed = false,
+		.id = ARROW
+	};
 
+	Button pause = {
+		.rect = {
+			.x = 145,
+			.y = 145,
+			.w = 24,
+			.h = 24},
+			.hovered = false,
+			.increaseSpeed = false,
+			.id = PAUSE
+	};
+
+	Button play = {
+		.rect = {
+			.x = 145,
+			.y = 145,
+			.w = 24,
+			.h = 24},
+			.hovered = false,
+			.increaseSpeed = false,
+			.id = PLAY
+	};
+
+
+	static const int numWdgts = 2;
+	SDL_FRect wdgtArray[numWdgts] = { textInfo, readingInfo };
+
+	//	TODO: Decide if buttonArray should be arrowArray
 	static const int numButtons = 2;
 	Button buttonArray[numButtons] = { upArrow, downArrow };
 

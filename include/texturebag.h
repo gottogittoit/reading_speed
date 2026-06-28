@@ -9,6 +9,14 @@ struct TextureBag {
 	TextureManager upArrowHovered;
 	TextureManager downArrow;
 	TextureManager downArrowHovered;
+	TextureManager pause;
+	TextureManager pauseHovered;
+	TextureManager play;
+	TextureManager playHovered;
+	TextureManager rewind;
+	TextureManager rewindHovered;
+	TextureManager ffw;
+	TextureManager ffwHovered;
 };
 
 #endif

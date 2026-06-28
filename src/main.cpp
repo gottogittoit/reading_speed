@@ -34,11 +34,11 @@ struct SDL_Application {
 		}
 
 		std::string mobyStr;
-		parser.readFile("../../text-files/moby-dick.txt", mobyStr);	// (loads file based on working directory)
+		parser.readFile("assets/text-files/moby-dick.txt", mobyStr);
 		mobySS = std::stringstream(mobyStr);
 
 		std::string aliceStr;
-		parser.readFile("../../text-files/alice's-adventures-in-wonderland.txt", aliceStr);
+		parser.readFile("assets/text-files/alice's-adventures-in-wonderland.txt", aliceStr);
 		aliceSS = std::stringstream(aliceStr);
 
 		std::cout << "moby-dick length: " << mobyStr.length() << " alice length: " << aliceStr.length();
@@ -64,11 +64,22 @@ struct SDL_Application {
 		appContext.textureBag.upArrowHovered.loadTexture(rContext.getRenderer(), "assets/arrow2.bmp");
 		appContext.textureBag.downArrow.loadTextureRotated(rContext.getRenderer(), "assets/arrow1.bmp", 180.0f);
 		appContext.textureBag.downArrowHovered.loadTextureRotated(rContext.getRenderer(), "assets/arrow2.bmp", 180.0f);
+
+		appContext.textureBag.pause.loadTexture(rContext.getRenderer(), "assets/pause1.bmp");
+		appContext.textureBag.pauseHovered.loadTexture(rContext.getRenderer(), "assets/pause2.bmp");
+		appContext.textureBag.play.loadTexture(rContext.getRenderer(), "assets/play1.bmp");
+		appContext.textureBag.playHovered.loadTexture(rContext.getRenderer(), "assets/play2.bmp");
+
+
+		//	TODO
+		/*appContext.textureBag.play.loadTexture(rContext.getRenderer(), "assets/play.bmp");
+		appContext.textureBag.rewind.loadTexture(rContext.getRenderer(), "assets/rewind.bmp");
+		appContext.textureBag.ffw.loadTexture(rContext.getRenderer(), "assets/ffw.bmp");*/
+
 	}
 
 	void Input() {
 		inputHandler.pollEvents(appContext);
-		//	TO-DO: Handle the speed at which words appear
 		inputHandler.wordTimer(appContext);
 		inputHandler.handleMouseInput(appContext, rContext.getRenderer());
 	}
